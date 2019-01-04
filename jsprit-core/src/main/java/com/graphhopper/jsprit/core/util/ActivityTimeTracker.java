@@ -81,9 +81,13 @@ public class ActivityTimeTracker implements ActivityVisitor {
 
     @Override
     public void visit(TourActivity activity) {
+        double shopping = 0.0;
+        if (startAtPrevAct == 0 && !route.getTourActivities().getActivities().isEmpty() ) {
+            shopping = route.getTourActivities().getActivities().size() * 300;
+        }
         if (!beginFirst) throw new IllegalStateException("never called begin. this however is essential here");
         double transportTime = this.transportTime.getTransportTime(prevAct.getLocation(), activity.getLocation(), startAtPrevAct, route.getDriver(), route.getVehicle());
-        double arrivalTimeAtCurrAct = startAtPrevAct + transportTime;
+        double arrivalTimeAtCurrAct = shopping + startAtPrevAct + transportTime;
 
         actArrTime = arrivalTimeAtCurrAct;
         double operationStartTime;
